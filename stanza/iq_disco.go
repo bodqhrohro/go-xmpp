@@ -21,6 +21,7 @@ type DiscoInfo struct {
 	Identity  []Identity `xml:"identity"`
 	Features  []Feature  `xml:"feature"`
 	ResultSet *ResultSet `xml:"set,omitempty"`
+	Form      *Form      `xml:"x,omitempty"`
 }
 
 // Namespace lets DiscoInfo implement the IQPayload interface

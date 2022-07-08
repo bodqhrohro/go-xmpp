@@ -16,6 +16,7 @@ func TestDiscoInfo_Builder(t *testing.T) {
 	disco := iq.DiscoInfo()
 	disco.AddIdentity("Test Component", "gateway", "service")
 	disco.AddFeatures(stanza.NSDiscoInfo, stanza.NSDiscoItems, "jabber:iq:version", "urn:xmpp:delegation:1")
+	disco.Form = stanza.NewForm([]*stanza.Field{}, "result")
 
 	parsedIQ, err := checkMarshalling(t, iq)
 	if err != nil {
@@ -46,6 +47,15 @@ func TestDiscoInfo_Builder(t *testing.T) {
 	} else {
 		if pp.Identity[0].Name != "Test Component" {
 			t.Errorf("Incorrect identity name: %#v", pp.Identity[0].Name)
+		}
+	}
+
+	// Check form
+	if pp.Form == nil {
+		t.Errorf("Form is nil")
+	} else {
+		if len(pp.Form.Fields) != 0 {
+			t.Errorf("Form fields length mismatch: %#v", pp.Form.Fields)
 		}
 	}
 }
